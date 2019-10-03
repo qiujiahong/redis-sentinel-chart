@@ -1,6 +1,37 @@
 # REDIS哨兵chart 
 
-1主2从，3哨兵。
 
-<!-- redis-m-0.redis-m.default.svc.cluster.local -->
-ping redis-m-0.redis-m  
+## 简介
+
+* 本chart安装一个redis哨兵集群，可提供给集群的其他应用使用；
+* 集群模式： 1主2从，3哨兵
+* 哨兵连接信息： 
+  * redis-sen-0.redis-sen 26379
+  * redis-sen-1.redis-sen 26379
+  * redis-sen-2.redis-sen 26379
+
+## 安装与卸载
+
+```bash
+# 避免重复安装最好指定名字
+helm install --name redis-sen ./
+# 卸载
+helm delete redis-sen 
+helm del --purge redis-sen
+```
+
+## 测试命令: 
+
+```bash
+# 进入其中一个pod节点
+kubectl exec -it redis-sen-0 bash 
+# 登录redis哨兵
+redis-cli -h redis-sen-1.redis-sen -p 26379
+# 输入命令查看集群信息
+info 
+```
+
+> 如果不再同一个namespace下，可以使用完整域名，如：``redis-sen-0.redis-sen.default.svc.cluster.local``
+
+
+
