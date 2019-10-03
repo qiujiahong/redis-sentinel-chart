@@ -34,4 +34,6 @@ info
 > 如果不再同一个namespace下，可以使用完整域名，如：``redis-sen-0.redis-sen.default.svc.cluster.local``
 
 
+## 使用到的镜像
 
+该chart使用了docker hub官方的redis镜像-redis:5.0.6-buster，如果网络条件良好，读者可以自行获取。否则可科学上网。
