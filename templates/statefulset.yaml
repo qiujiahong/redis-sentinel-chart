@@ -20,6 +20,18 @@ spec:
         ports:
         - containerPort: 6379
           name: redis-port
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/redis/6379.conf
+          subPath: master.map
+      volumes:
+        - name: config-volume
+          configMap:
+            name: redis-conf
+            items:
+            - key: master.conf # config map中的key
+              path: master.map # 给其他地方引用
+          # /etc/
 # apiVersion: apps/v1
 # kind: StatefulSet
 # metadata:
