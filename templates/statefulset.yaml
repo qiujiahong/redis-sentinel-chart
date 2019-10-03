@@ -33,26 +33,4 @@ spec:
             items:
             - key: master.conf # config map中的key
               path: master.map # 给其他地方引用
-          # /etc/
-# apiVersion: apps/v1
-# kind: StatefulSet
-# metadata:
-#   name: redis-m1
-# spec:
-#   selector:
-#     matchLabels:
-#       app: redis-m1 
-#   serviceName: "redis-m1"
-#   replicas: 1 # by default is 1
-#   template:
-#     metadata:
-#       labels:
-#         app: redis-m1 # has to match .spec.selector.matchLabels
-#     spec:
-#       terminationGracePeriodSeconds: 10
-#       containers:
-#       - name: redis-m1
-#         image: redis:5.0.6-buster
-#         ports:
-#         - containerPort: 6379
-#           name: redis-m1
+              
