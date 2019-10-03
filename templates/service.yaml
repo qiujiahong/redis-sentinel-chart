@@ -21,3 +21,15 @@ spec:
   clusterIP: None
   selector:
     app: redis-s
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-sen
+spec:
+  ports:
+  - port: 26379
+    name: redis
+  clusterIP: None
+  selector:
+    app: redis-sen

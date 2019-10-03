@@ -17,14 +17,16 @@ spec:
       containers:
       - name: redis
         image: redis:5.0.6-buster
-        command: ["redis-server"]
-        args: ["/etc/redis/6379.conf"]
+        # command: ["redis-server"]
+        # args: ["/etc/redis/6379.conf"]
+        command: ["/bin/sh","-c"]
+        args: ["cd /etc/redis/ && cp -rf cm6379.conf 6379.conf && redis-server /etc/redis/6379.conf"]
         ports:
         - containerPort: 6379
           name: redis-port
         volumeMounts:
         - name: config-volume
-          mountPath: /etc/redis/6379.conf
+          mountPath: /etc/redis/cm6379.conf
           subPath: master.map
       volumes:
         - name: config-volume
@@ -53,14 +55,16 @@ spec:
       containers:
       - name: redis
         image: redis:5.0.6-buster
-        command: ["redis-server"]
-        args: ["/etc/redis/6379.conf"]
+        # command: ["redis-server"]
+        # args: ["/etc/redis/6379.conf"]
+        command: ["/bin/sh","-c"]
+        args: ["cd /etc/redis/ && cp -rf cm6379.conf 6379.conf && redis-server /etc/redis/6379.conf"]
         ports:
         - containerPort: 6379
           name: redis-port
         volumeMounts:
         - name: config-volume
-          mountPath: /etc/redis/6379.conf
+          mountPath: /etc/redis/cm6379.conf
           subPath: slave.map
       volumes:
         - name: config-volume
@@ -69,4 +73,43 @@ spec:
             items:
             - key: slave.conf # config map中的key
               path: slave.map # 给其他地方引用
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-sen
+spec:
+  selector:
+    matchLabels:
+      app: redis-sen
+  serviceName: "redis-sen"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: redis-sen
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: redis
+        image: redis:5.0.6-buster
+        # command: ["redis-sentinel"]
+        # args: ["/etc/redis/26379.conf"]
+        command: ["/bin/sh","-c"]
+        args: ["cd /etc/redis/ && cp -rf cm26379.conf 26379.conf && redis-sentinel /etc/redis/26379.conf"]
+        ports:
+        - containerPort: 26379
+          name: redis-port
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/redis/cm26379.conf
+          subPath: sentinel.map
+          readOnly: false
+      volumes:
+        - name: config-volume
+          configMap:
+            name: redis-conf
+            items:
+            - key: sentinel.conf # config map中的key
+              path: sentinel.map # 给其他地方引用
               
