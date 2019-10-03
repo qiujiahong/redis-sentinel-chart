@@ -33,4 +33,40 @@ spec:
             items:
             - key: master.conf # config map中的key
               path: master.map # 给其他地方引用
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-s
+spec:
+  selector:
+    matchLabels:
+      app: redis-s
+  serviceName: "redis-s"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: redis-s
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: redis
+        image: redis:5.0.6-buster
+        command: ["redis-server"]
+        args: ["/etc/redis/6379.conf"]
+        ports:
+        - containerPort: 6379
+          name: redis-port
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/redis/6379.conf
+          subPath: slave.map
+      volumes:
+        - name: config-volume
+          configMap:
+            name: redis-conf
+            items:
+            - key: slave.conf # config map中的key
+              path: slave.map # 给其他地方引用
               
