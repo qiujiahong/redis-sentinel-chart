@@ -9,6 +9,7 @@
   * redis-sen-0.redis-sen 26379
   * redis-sen-1.redis-sen 26379
   * redis-sen-2.redis-sen 26379
+  * 密码: 123456
 
 ## 测试命令: 
 
