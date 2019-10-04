@@ -1,0 +1,7 @@
+redis:
+  # redis 端口
+  port: 6379
+  # redis 哨兵端口
+  sentinelPort: 26379
+  # redis master 访问免密
+  password: 123456

@@ -9,7 +9,19 @@
   * redis-sen-0.redis-sen 26379
   * redis-sen-1.redis-sen 26379
   * redis-sen-2.redis-sen 26379
-  * 密码: 123456
+  * 默认密码: 123456
+
+## 可配置参数
+
+```YAML
+redis:
+  # redis 端口
+  port: 6379
+  # redis 哨兵端口
+  sentinelPort: 26379
+  # redis master 访问免密
+  password: 888888
+```
 
 ## 测试命令: 
 

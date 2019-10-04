@@ -9,13 +9,26 @@
   * redis-sen-0.redis-sen 26379
   * redis-sen-1.redis-sen 26379
   * redis-sen-2.redis-sen 26379
-  * 密码: 123456
+  * 默认密码: 123456
 
+## 可配置参数
+
+```YAML
+redis:
+  # redis 端口
+  port: 6379
+  # redis 哨兵端口
+  sentinelPort: 26379
+  # redis master 访问免密
+  password: 123456
+```
 ## 安装与卸载
 
 ```bash
 # 避免重复安装最好指定名字
 helm install --name redis-sen ./
+# 配置参数
+helm install --name redis-sen --set redis.port=6479 ./
 # 卸载
 helm delete redis-sen 
 helm del --purge redis-sen
